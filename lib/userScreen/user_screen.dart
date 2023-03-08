@@ -26,6 +26,10 @@ class _UserScreenState extends State<UserScreen> {
     getNotes();
     super.initState();
   }
+  void noteSearch(text)async{
+    userNotes =await database.searchNotes(text);
+    setState(() {});
+  }
 
  void getNotes()async{
     userNotes =await database.getAllData();
@@ -41,7 +45,7 @@ class _UserScreenState extends State<UserScreen> {
         actions: [
           AnimationSearchBar(
             searchTextEditingController: searchController,
-            onChanged: (search) => debugPrint(search),
+            onChanged: (search) => noteSearch(search),
             centerTitle: "Notes",
             isBackButtonVisible: false,
             hintStyle: const TextStyle(

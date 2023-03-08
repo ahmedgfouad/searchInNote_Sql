@@ -63,4 +63,16 @@ class DatabaseHelper{
         .delete(_tableName, where: '$_columnId = ?', whereArgs: [id]);
   }
 
+  Future<List<NoteModel>>searchNotes(String text) async{
+    Database db=await instance._database;
+   final response =await db.query(_tableName,columns: [
+      _columnId,
+      _columnTitle,
+      _columnNote,
+    ],
+    where: '$_columnTitle LIKE ?',
+      whereArgs: ['%$text%']
+    );return response.map((e) => NoteModel.fromMap(e)).toList();
+  }
+
 }
